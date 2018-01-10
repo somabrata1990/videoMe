@@ -1,0 +1,42 @@
+{
+  "name": "videome",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./build/index.js",
+  "scripts": {
+    "dev": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/somabrata1990/videoMe.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/somabrata1990/videoMe/issues"
+  },
+  "homepage": "https://github.com/somabrata1990/videoMe#readme",
+  "dependencies": {
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-polyfill": "^6.9.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-register": "^6.9.0",
+    "cross-env": "^1.0.8",
+    "css-loader": "^0.23.1",
+    "expect": "^1.20.1",
+    "node-libs-browser": "^1.0.0",
+    "sass-loader": "^4.0.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.11.0"
+  },
+  "devDependencies": {
+    "babel-plugin-react-transform": "^2.0.2",
+    "babel-preset-stage-0": "^6.5.0"
+  }
+}
