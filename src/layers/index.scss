@@ -1,0 +1,34 @@
+.layersWrapper {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
+}
+.startPoster {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.endPoster {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.playIconLayer {
+  height: 10%;
+  width: 10%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}

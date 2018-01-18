@@ -1,3 +1,5 @@
+require("./index.scss");
+
 export default class generateLayers{
     constructor(config) {
         this.layersWrapper = document.createElement("div");
@@ -5,17 +7,17 @@ export default class generateLayers{
         this.layersWrapper.classList = ["layersWrapper"];
         if(config.startPosterImage) {
             startPosterDiv = this.generateStartPosterImageLayer(config.startPosterImage);
-            this.addLayerTowrapper(startPosterDiv);
+            this.addLayerToWrapper(startPosterDiv);
             //layersWrapper.appendChild(startPosterDiv);
         }
         if(config.endPosterImage) {
             endPosterDiv = this.generateEndPosterImageLayer(config.endPosterImage);
-            this.addLayerTowrapper(endPosterDiv);
+            this.addLayerToWrapper(endPosterDiv);
             //layersWrapper.appendChild(endPosterDiv);
         }
         if(config.showPlayIcon) {
             playIconDiv = this.generatePlayIconLayer(config.showPlayIcon);
-            this.addLayerTowrapper(playIconDiv);
+            this.addLayerToWrapper(playIconDiv);
             //layersWrapper.appendChild(playIconDiv);
         }
         return {
@@ -23,11 +25,11 @@ export default class generateLayers{
             startPosterDiv,
             endPosterDiv,
             playIconDiv,
-            addCustomLayer: this.addLayerTowrapper
+            addCustomLayer: this.addLayerToWrapper
         };
     }
 
-    addLayerTowrapper(layer){
+    addLayerToWrapper(layer){
         this.layersWrapper.appendChild(layer);
     }
 

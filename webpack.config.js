@@ -4,8 +4,7 @@ var webpack = require('webpack');
 module.exports = {
     devServer: {
         inline: true,
-        contentBase: './',
-        hot: true,
+        contentBase: './build',
         port: 3001
     },
     devtool: 'cheap-module-eval-source-map',
@@ -14,7 +13,7 @@ module.exports = {
         loaders: [
             {
                 test: /\.js$/,
-                loaders: ['babel'],
+                loaders: ['babel-loader'],
                 exclude: /node_modules/
             },
             {
@@ -24,7 +23,7 @@ module.exports = {
         ]
     },
     output: {
-        path: 'build',
+        path: './build',
         filename: 'js/bundle.min.js'
     },
     plugins: [
