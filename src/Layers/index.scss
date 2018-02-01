@@ -6,20 +6,22 @@
   left: 0px;
   z-index: 0;
 }
-.startPoster {
+.startPosterLayer {
   height: 100%;
   width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   z-index: 1;
+  background-color: brown;
 }
 
-.endPoster {
+.endPosterLayer {
   height: 100%;
   width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   z-index: 1;
+  background-color: aqua;
 }
 
 .playIconLayer {
@@ -31,4 +33,5 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  background-color: black;
 }
