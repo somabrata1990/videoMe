@@ -5,23 +5,27 @@ export default class EventBindings {
         let EQM = new eventQueueManager();
         EQM.status = "ended";
         EQM.numberOfIterations = 0;
+        EQM.currentTime = 0;
+        this.bindVideoDomActions(videoDom, config);
         this.registerEvents(videoDom, EQM);
-        //this.registerActions(config, videoDom);
         return EQM;
     }
 
-    // registerActions(config, videoDom) {
-    //     if (config.clickToPlayPause)
-    //         videoDom.addEventListener("click", function () {
-    //             if (this.pause) this.play();
-    //             else this.pause();
-    //         });
-    // }
+    bindVideoDomActions(videoDom, config) {
+        if (config.clickToPlayPause) {
+            videoDom.addEventListener("click", function () {
+                if (this.playing)
+                    this.pause();
+                else
+                    this.play();
+            });
+        }
+    }
 
     registerEvents(videoDom, EQM) {
-        // videoDom.addEventListener("play", function () {
-        //     EQM.trigger("start");
-        // });
+        videoDom.addEventListener("play", function () {
+            EQM.trigger("start");
+        });
         videoDom.addEventListener("playing", function () {
             if (EQM.status === "ended") {
                 EQM.status = "started";
@@ -30,27 +34,31 @@ export default class EventBindings {
                 EQM.status = "playing";
                 EQM.trigger("resume");
             } else {
-                console.log("playing trigger error:" + this.currentTime + " || status: " + EQM.status);
+                console.error("playing trigger error:" + this.currentTime + " || status: " + EQM.status);
             }
         });
         videoDom.addEventListener("timeupdate", function () {
-            if (this.currentTime < 0.5 && EQM.status !== "started") {
-                EQM.status = "started";
-                EQM.trigger("start");
+            if (EQM.currentTime !== Math.floor(this.currentTime)) {
+                EQM.trigger("timeUpdate");
+                EQM.currentTime = Math.floor(this.currentTime);
             }
             if (this.currentTime > this.duration - 0.5 && EQM.status !== "ended") {
-                EQM.status = "ended";
-                EQM.numberOfIterations += 1;
-                EQM.trigger("end");
+                if (EQM.status !== "ended") {
+                    EQM.status = "ended";
+                    EQM.numberOfIterations += 1;
+                    EQM.trigger("end");
+                }
             }
         });
         videoDom.addEventListener("pause", function () {
             if (EQM.status === "started" || EQM.status === "playing") {
                 EQM.status = "paused";
+                EQM.trigger("pause");
+            } else if (EQM.status === "ended") {
+                console.log("pause after ended");
             } else {
-                console.log("paused trigger error:" + this.currentTime);
+                console.error("paused trigger error:" + this.currentTime);
             }
-            EQM.trigger("pause");
         });
         videoDom.addEventListener("seeked", function () {
             EQM.trigger("seeked");
@@ -58,10 +66,12 @@ export default class EventBindings {
         videoDom.addEventListener("buffering", function () {
             EQM.trigger("buffering");
         });
-        videoDom.addEventListener("stop", function () {
-            EQM.status = "ended";
-            EQM.numberOfIterations += 1;
-            EQM.trigger("end");
+        videoDom.addEventListener("ended", function () {
+            if (EQM.status !== "ended") {
+                EQM.status = "ended";
+                EQM.numberOfIterations += 1;
+                EQM.trigger("end");
+            }
         });
     }
 };

@@ -1,7 +1,8 @@
 export default class eventQueueManager {
+
     constructor() {
-        this.eventQueue = {};
         return {
+            eventQueue: {},
             addEventListener: this.registerToEventQueue,
             trigger: this.triggerEvent,
             removeEventListner: this.deregisterFromEventQueue

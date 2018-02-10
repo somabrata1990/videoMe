@@ -1,19 +1,23 @@
 <html>
-    <head>Video Demo</head>
+    <head>
+        Video Demo
+        <link rel="stylesheet" type="text/css" href="./styles.css"/>
+    </head>
     <body>
         <div id="videoContainer" style="height:200px;width:400px;position:relative"></div>
         <script src="js/bundle.min.js"></script>
         <script>
             var videoContainer = document.getElementById("videoContainer");
             var videoWrapper = new videoMe({
-                src: "http://localhost:8080/video.mp4",
+                src: "http://localhost:8080/239.MP4",
                 container: videoContainer,
                 showControls: false,
+                useNativeControls: false,
                 responsive: false,
                 autoplay: false,
                 startPosterImage: "http://localhost:8080/start.jpeg",
                 endPosterImage: "http://localhost:8080/start.jpeg",
-                showPlayIcon: "http://localhost:8080/start.jpeg"
+                showPlayIcon: "http://localhost:8080/playIcon.png"
             });
         </script>
     </body>

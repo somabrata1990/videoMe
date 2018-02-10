@@ -1,5 +1,6 @@
 export default {
     showControls: true,
+    useNativeControls: false,
     responsive: true,
     autoplay: false,
     loop: false,

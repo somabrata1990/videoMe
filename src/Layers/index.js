@@ -1,43 +1,58 @@
-require("./index.scss");
+import playIcon from "../assets/posterplay.png";
 
 export default class generateLayers {
     constructor(config, videoDom) {
+        let self = this,
+            startPosterDiv = null,
+            endPosterDiv = null,
+            playIconDiv = null;
         this.layersWrapper = document.createElement("div");
-        let startPosterDiv = null, endPosterDiv = null, playIconDiv = null;
         this.layersWrapper.classList = ["layersWrapper"];
         if (config.startPosterImage) {
             startPosterDiv = this.generateStartPosterImageLayer(config.startPosterImage);
-            if (config.autoplay) startPosterDiv.classList = ["startPosterLayer hide"];
+            if (config.autoplay) this.hideTheLayer(startPosterDiv);
             this.addLayerToWrapper(startPosterDiv);
             videoDom.addEventListener("playing", function () {
-                startPosterDiv.classList = ["startPosterLayer hide"];
+                self.hideTheLayer(startPosterDiv);
             });
             //layersWrapper.appendChild(startPosterDiv);
         }
         if (config.endPosterImage) {
             endPosterDiv = this.generateEndPosterImageLayer(config.endPosterImage);
-            endPosterDiv.classList= ["endPosterLayer hide"];
+            //this.hideTheLayer(endPosterDiv);
+            //endPosterDiv.classList = ["endPosterLayer hide"];
             this.addLayerToWrapper(endPosterDiv);
             videoDom.addEventListener("playing", function () {
-                startPosterDiv.classList = ["endPosterLayer hide"];
+                self.hideTheLayer(endPosterDiv);
+                //endPosterLayer.classList = ["endPosterLayer hide"];
             });
-            videoDom.addEventListener("stop", function () {
-                endPosterDiv.classList = ["endPosterLayer"];
+            videoDom.addEventListener("ended", function () {
+                self.showTheLayer(endPosterDiv);
+                //endPosterDiv.classList = ["endPosterLayer"];
             });
             //layersWrapper.appendChild(endPosterDiv);
         }
         if (config.showPlayIcon) {
-            playIconDiv = this.generatePlayIconLayer(config.showPlayIcon);
-            if (config.autoplay) playIconDiv.classList = ["playIconLayer hide"];
+            playIconDiv = this.generatePlayIconLayer(playIcon);
+            if (config.autoplay) this.hideTheLayer(playIconDiv);
             this.addLayerToWrapper(playIconDiv);
             videoDom.addEventListener("playing", function () {
-                playIconDiv.classList = ["playIconLayer hide"];
+                self.hideTheLayer(playIconDiv);
+                //playIconDiv.classList = ["playIconLayer hide"];
             });
             videoDom.addEventListener("pause", function () {
-                playIconDiv.classList = ["playIconLayer"];
+                self.showTheLayer(playIconDiv);
+                //playIconDiv.classList = ["playIconLayer"];
             });
-            videoDom.addEventListener("stop", function () {
-                endPosterDiv.classList = ["playIconLayer"];
+            videoDom.addEventListener("seeking", function () {
+                self.hideTheLayer(playIconDiv);
+            });
+            videoDom.addEventListener("ended", function () {
+                self.showTheLayer(playIconDiv);
+                //playIconDiv.classList = ["playIconLayer"];
+            });
+            playIconDiv.addEventListener("click", function () {
+                videoDom.play();
             });
             //layersWrapper.appendChild(playIconDiv);
         }
@@ -48,6 +63,16 @@ export default class generateLayers {
             playIconDiv,
             addCustomLayer: this.addLayerToWrapper
         };
+    }
+
+    hideTheLayer(layer) {
+        this.layersWrapper.classList.add("hide");
+        layer.classList.add("hide");
+    }
+
+    showTheLayer(layer) {
+        this.layersWrapper.classList.remove("hide");
+        layer.classList.remove("hide");
     }
 
     addLayerToWrapper(layer) {
@@ -64,7 +89,7 @@ export default class generateLayers {
     generateEndPosterImageLayer(src) {
         let endPosterDiv = document.createElement('div');
         endPosterDiv["style"]["background-image"] = "url(" + src + ")";
-        endPosterDiv.classList = ["endPosterLayer"];
+        endPosterDiv.classList = ["endPosterLayer hide"];
         return endPosterDiv;
     }
 

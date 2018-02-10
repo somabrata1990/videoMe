@@ -1,4 +1,6 @@
-import { assert } from "./utils";
+import {
+  assert
+} from "./utils";
 import generateLayers from "./Layers";
 import generateControls from "./Controls";
 import eventsManager from "./EventManager";
@@ -17,16 +19,19 @@ class videoMe {
   init(config) {
     let wrapper = this.container;
     let videoDom = document.createElement("video");
-    let controls = null, EM = null;
+    let controls = null,
+      EM = null;
     wrapper.appendChild(videoDom);
 
     this.setVideoDomAttributes(videoDom, config);
+    this.setVideoDomStyles(videoDom, config);
     if (config.bindEvents) EM = new eventsManager(config, videoDom);
 
     let layers = new generateLayers(config, videoDom);
     wrapper.appendChild(layers.domNode);
 
-    if (config.showControls !== "hide" && config.customControls) {
+    if (config.showControls && !config.useNativeControls) {
+
       controls = new generateControls(config);
       wrapper.appendChild(controls.domNode);
     }
@@ -35,7 +40,31 @@ class videoMe {
       videoDom,
       layers: layers,
       customControlsLayer: controls,
-      eventsManager: EM
+      eventsManager: EM,
+      player: {
+        play: function () {
+          videoDom.play();
+          EM.trigger("userPlayed");
+        },
+        pause: function () {
+          videoDom.pause();
+          EM.trigger("userPaused");
+        },
+        goTo: function (time) {
+          videoDom.seek(time);
+          EM.trigger("userSeeked");
+        },
+        setVolume: function (val) {
+          videoDom.setVolume(val);
+          EM.trigger("userChangedVolume");
+        }
+      }
+    }
+  }
+
+  setVideoDomStyles(videoDom, config) {
+    if (config.clickToPlayPause) {
+      videoDom.style["pointer-events"] = "none";
     }
   }
 
@@ -45,7 +74,8 @@ class videoMe {
     videoDom.setAttribute("width", "100%");
     if (config.autoplay) videoDom.setAttribute("autoplay", "");
     if (config.loop) videoDom.setAttribute("loop", "");
-    if (config.showControls !== "hide" && !config.customControls) videoDom.setAttribute("controls", "");
+    if (config.showControls && config.useNativeControls) videoDom.setAttribute("controls", "");
   }
+
 }
 window.videoMe = videoMe;

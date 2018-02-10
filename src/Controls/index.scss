@@ -1,0 +1,64 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css";
+
+.controlsWrapper {
+    position: absolute;
+    height: 10%;
+    width: 100%;
+    bottom: 0;
+}
+
+.inlineBlock {
+    display: inline-block;
+}
+
+.playbtn{
+    height: 100%;
+    width: 7%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.time {
+    height: 100%;
+    width: 10%;
+    font-size: 12px;
+}
+
+.slider{
+    display: inline-block;
+    width: 63%;
+    position: absolute;
+    height: 100%;
+}
+
+.line {
+    background-repeat: repeat-x;
+    width: 100%;
+    height: 10%;
+    top: 50%;
+    background: #000;
+    position: absolute;
+}
+
+.iball {
+    position: absolute;
+    height: 100%;
+    width: 5%;
+}
+
+.iball.right {
+    right: 0;
+}
+
+.soundLine {
+    background-repeat: repeat-x;
+    width: 80px;
+    height: 2px;
+    background: #AED6F1;
+    position: relative;
+    margin: 0 0 0 20px;
+}
+
+.fRight {
+    float: right;
+}
